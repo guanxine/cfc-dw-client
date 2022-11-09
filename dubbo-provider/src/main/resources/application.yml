@@ -27,5 +27,3 @@ dubbo:
     address: zookeeper://zk1.pdt.mixiaojin.srv:2181,zk2.pdt.mixiaojin.srv:2181,zk3.pdt.mixiaojin.srv:2181,zk4.pdt.mixiaojin.srv:2181,zk5.pdt.mixiaojin.srv:2181
   metadata-report:
     address: zookeeper://zk1.pdt.mixiaojin.srv:2181,zk2.pdt.mixiaojin.srv:2181,zk3.pdt.mixiaojin.srv:2181,zk4.pdt.mixiaojin.srv:2181,zk5.pdt.mixiaojin.srv:2181
-  consumer:
-    timeout: 60000

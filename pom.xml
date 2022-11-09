@@ -23,6 +23,8 @@
 
     <modules>
         <module>dubbo-client</module>
+        <module>dubbo-provider</module>
+        <module>interface</module>
     </modules>
 
     <dependencyManagement>

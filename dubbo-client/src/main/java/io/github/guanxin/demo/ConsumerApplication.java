@@ -18,8 +18,8 @@
 package io.github.guanxin.demo;
 
 import com.xiaomi.mifi.datamap.common.model.ResultDTO;
-import com.xiaomi.mifi.datamap.iface.doris.DorisTableService;
 import com.xiaomi.mifi.datamap.scheduler.DorisLoadScheduleService;
+import io.github.guanxin.DemoService;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.apache.dubbo.config.spring.context.annotation.EnableDubbo;
 import org.slf4j.Logger;
@@ -28,9 +28,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Map;
 
 @SpringBootApplication
 @Service
@@ -42,7 +39,7 @@ public class ConsumerApplication {
     private DorisLoadScheduleService dorisLoadScheduleService;
 
     @DubboReference
-    private DorisTableService dorisTableService;
+    private DemoService demoService;
 
     public static void main(String[] args) {
 
@@ -53,9 +50,10 @@ public class ConsumerApplication {
     }
 
     public ResultDTO<Boolean> syncTableFields(String name, String code) {
+
+
+        demoService.sayHello(name);
         logger.info("check doris table table {}, tenantCode {}", name, code);
-        List<Map<String, Object>> maps = dorisTableService.descTable(name);
-        logger.info("desc {} maps = {}", name, maps);
         return dorisLoadScheduleService.checkDorisTable(name, code);
     }
 }
