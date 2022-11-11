@@ -18,42 +18,35 @@
 package io.github.guanxin.demo;
 
 import com.xiaomi.mifi.datamap.common.model.ResultDTO;
-import com.xiaomi.mifi.datamap.scheduler.DorisLoadScheduleService;
-import io.github.guanxin.DemoService;
-import org.apache.dubbo.config.annotation.DubboReference;
 import org.apache.dubbo.config.spring.context.annotation.EnableDubbo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.netflix.hystrix.EnableHystrix;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.stereotype.Service;
 
 @SpringBootApplication
-@Service
+@EnableHystrix
 @EnableDubbo
 public class ConsumerApplication {
 
     protected final Logger logger = LoggerFactory.getLogger(ConsumerApplication.class);
-    @DubboReference
-    private DorisLoadScheduleService dorisLoadScheduleService;
-
-    @DubboReference
-    private DemoService demoService;
-
     public static void main(String[] args) {
-
         ConfigurableApplicationContext context = SpringApplication.run(ConsumerApplication.class, args);
-        ConsumerApplication application = context.getBean(ConsumerApplication.class);
-        ResultDTO<Boolean> booleanResultDTO = application.syncTableFields(args[0], args[1]);
-        System.out.println("result: " + booleanResultDTO);
+
+        new ConsumerApplication().run(context, args);
+
+        context.close();
     }
 
-    public ResultDTO<Boolean> syncTableFields(String name, String code) {
+    private void run(ConfigurableApplicationContext context, String[] args) {
+        DorisService dorisService = context.getBean(DorisService.class);
+        ResultDTO<Boolean> resultDTO = dorisService.syncTableFields(args[0], args[1]);
+        logger.info("result {}", resultDTO);
 
+        TestService testService = context.getBean(TestService.class);
+        testService.test("test");
 
-        demoService.sayHello(name);
-        logger.info("check doris table table {}, tenantCode {}", name, code);
-        return dorisLoadScheduleService.checkDorisTable(name, code);
     }
 }

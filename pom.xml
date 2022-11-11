@@ -18,6 +18,7 @@
         <junit.version>4.13.1</junit.version>
         <slf4j-log4j12.version>1.7.25</slf4j-log4j12.version>
         <spring-boot.version>2.3.1.RELEASE</spring-boot.version>
+        <hystrix-starter.version>1.4.7.RELEASE</hystrix-starter.version>
         <spring-boot-maven-plugin.version>2.1.4.RELEASE</spring-boot-maven-plugin.version>
     </properties>
 
